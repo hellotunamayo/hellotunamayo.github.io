@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>TLD Rare loot table API</title>
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;700&display=swap');
+		@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;700&family=Roboto+Condensed:wght@700&display=swap');
+		*{
+			box-sizing: border-box;
+		}
+		html,body{
+			margin: 0;
+			padding: 0;
+			font-family: "Noto Sans KR", sans-serif;
+			font-weight: 300;
+		}
+		.header{
+			background-color: #000;
+			color: #fff;
+			padding:  10px 25px;
+		}
+		.header h1{
+			font-size: 28px;
+			margin: 0;
+			padding: 0;
+			font-weight: 700;
+			font-family: "Roboto Condensed";
+			text-transform: uppercase;
+		}
+		.header img.gamelogo{
+			display: inline-block;
+			height:  32px;
+			position: relative;
+			top: 5px;
+			margin-right: 14px;
+		}
+		.container{
+			display: grid;
+			grid-template-columns: 1fr 1fr 3fr;
+			height: 100vh;
+		}
+		ul.list{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			border-right: 1px solid #565656;
+		}
+		ul.list li{
+			padding: 15px 25px;
+			border-bottom: 1px solid #565656;
+			cursor: pointer;
+		}
+		ul.list.content li{
+			cursor: auto;
+		}
+		ul.list li.selected{
+			background-color: #ca4949;
+			color: #fff;
+		}
+		ul.first-nav{
+			background-color: #333;
+			color: #fff;
+		}
+		ul.second-nav{
+			background-color: #ddd;
+		}
+		ul.contnet{
+			background-color: #eee;
+		}
+	</style>
+</head>
+<body>
+	<div id="header" class="header">
+		<h1><img class="gamelogo" src="logo-tld-header.svg"> &mdash; &nbsp; Interloper Rare Loot Table</h1>
+	</div>
+	<div class="container">
+		<ul id="itemlist" class="list first-nav"></ul>
+		<ul id="regionlist" class="list second-nav"></ul>
+		<ul id="placelist" class="list content"></ul>
+	</div>
+
+	<script>
+		var url = "data.json";
+		fetch(url)
+		.then(res=>res.json())
+		.then((json)=>{
+			var data = json;
+			var list = document.getElementById("itemlist");
+			json.dataset.forEach((name, index)=>{
+				list.innerHTML += `
+					<li onclick="resetSelection('#itemlist > li', this);showRegion(${index});">${name.itemname}</li>
+				`;
+			});
+		});	
+
+		function showRegion(param){
+			resetState();
+			var list = document.getElementById("regionlist");
+			list.innerHTML = "";
+			fetch(url)
+			.then((res)=>res.json())
+			.then((json)=>{
+				var data = json.dataset[param];
+				data.locationlist.forEach((location, index)=>{
+					list.innerHTML += `
+						<li onclick="resetSelection('#regionlist > li', this); showPlace(${param},${index});">${location.region}</li>
+					`;
+				});
+			});
+		}
+
+		function showPlace(itemindex, locationindex){
+			var list = document.getElementById("placelist");
+			list.innerHTML = "";
+			fetch(url)
+			.then((res)=>res.json())
+			.then((json)=>{
+				var data = json.dataset[itemindex].locationlist[locationindex];
+				data.place.forEach((place)=>{
+					list.innerHTML += `
+						<li>${place}</li>
+					`;
+				});
+			});
+		}
+
+		function resetState(){
+			document.getElementById("regionlist").innerHTML = "";
+			document.getElementById("placelist").innerHTML = "";
+		}
+
+		function resetSelection(nodes, selected){
+			var target = document.querySelectorAll(nodes);
+			// console.log(target);
+			target.forEach((tgt)=>{
+				tgt.classList.remove("selected");
+			});
+			selected.classList.add("selected");
+		}
+	</script>
+</body>
+</html>
