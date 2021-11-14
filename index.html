@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<title>TLD Rare loot table API</title>
 	<style>
-		@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;700&display=swap');
+		@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;500;700&display=swap');
 		@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;700&family=Roboto+Condensed:wght@700&display=swap');
 		*{
 			box-sizing: border-box;
@@ -15,10 +15,15 @@
 			font-family: "Noto Sans KR", sans-serif;
 			font-weight: 300;
 		}
+		p,h1,h2,h3,h4{
+			margin: 0;
+			padding: 0;
+		}
 		.header{
 			background-color: #000;
 			color: #fff;
 			padding:  10px 25px;
+			height: 60px;
 		}
 		.header h1{
 			font-size: 28px;
@@ -38,13 +43,13 @@
 		.container{
 			display: grid;
 			grid-template-columns: 1fr 1fr 3fr;
-			height: 100vh;
+			height: calc(100vh - 310px);
 		}
 		ul.list{
 			margin: 0;
 			padding: 0;
 			list-style: none;
-			border-right: 1px solid #565656;
+			border-right: 1px solid #555;
 		}
 		ul.list li{
 			padding: 15px 25px;
@@ -68,6 +73,52 @@
 		ul.contnet{
 			background-color: #eee;
 		}
+		footer.footer{
+			min-height: 250px;
+			display: grid;
+			grid-template-columns: repeat(6, 1fr);
+			grid-column-gap: 30px;
+			background-color: #000;
+			color: #eee;
+			font-size: 14px;
+			padding: 30px 20px;
+		}
+		footer.footer .column.logo{
+			font-family: "Roboto Condensed";
+			font-size:  20px;
+			text-transform: uppercase;
+			line-height: 130%;
+		}
+		footer.footer .column.logo img{
+			width: 200px;
+		}
+		footer.footer ul{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		footer.footer ul li{
+			margin: 5px 0;
+			padding: 0 3px 0 15px;
+			text-indent: -5px;
+		}
+		footer.footer ul li::before{
+			content: "-";
+			display: inline-block;
+			padding-right: 5px;
+		}
+		footer.footer ul a{
+			color: #fff;
+			text-decoration: none;
+		}
+		footer h2{
+			font-family: "Roboto Condensed";
+			border-bottom: 1px solid #777;
+			font-size: 18px;
+			font-weight: 500;
+			padding: 0 3px 10px;
+			margin-bottom: 10px;
+		}
 	</style>
 </head>
 <body>
@@ -79,6 +130,43 @@
 		<ul id="regionlist" class="list second-nav"></ul>
 		<ul id="placelist" class="list content"></ul>
 	</div>
+	<footer id="footer" class="footer">
+		<div class="column logo">
+			<img src="logo-tld-header.svg"><br>Interloper<br>Rare Loot Table
+		</div>
+		<div class="column">
+			<h2>Founder</h2>
+			<ul>
+				<li><a href="https://twitch.tv/hellotunamayo" target="_blank">참치마요네즈</a></li>
+			</ul>
+		</div>
+		<div class="column">
+			<h2>Contributor</h2>
+			<ul>
+				<li><a href="https://twitch.tv/raywingz" target="_blank">그므시라꼬</a></li>
+				<li><a href="https://twitch.tv/hellotunamayo" target="_blank">참치마요네즈</a></li>
+				<li><a href="https://twitch.tv/acubens22" target="_blank">팀버울프</a></li>
+			</ul>
+		</div>
+		<div class="column">
+			<h2>Initial Data Reference</h2>
+			<ul>
+				<li><a href="https://docs.google.com/spreadsheets/d/11n0wfRQadaWay4feLbunF9dxIbS2hZ3O_I57x5JfF6s/htmlview#gid=1146953510" target="_blank">TLD interloper LOOT Table made by Vancalar & Atheenon</a></li>
+			</ul>
+		</div>
+		<div class="column">
+			<h2>Contact / Issue Report</h2>
+			<ul>
+				<li>*github issue page (차후 추가)</li>
+			</ul>
+		</div>
+		<div class="column">
+			<h2>Last Updated</h2>
+			<ul>
+				<li>Nov. 14th of 2021</li>
+			</ul>
+		</div>
+	</footer>
 
 	<script>
 		var url = "data.json";
